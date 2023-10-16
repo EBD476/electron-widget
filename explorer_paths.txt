@@ -1,0 +1,7 @@
+D:\R-D\ai\pythons
+D:\R-D\electron
+D:\Project\kavosh\FMSKVSH-1162\reporting
+D:\Project\kavosh\FMSKVSH-1162\reporting\src\main\java\com\isc\reporting\api
+D:\Project\kavosh\FMKVSH-1016\BI\src\main\java\ir\co\isc\fms\kavosh\bi\api
+D:\nifi\flink\test-app
+D:\Project\kavosh\uigateway\src\main\java\ir\co\isc\fms\kavosh\uigateway\service\business

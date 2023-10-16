@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Electron App</title>	  	
+	 <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Poppins:400,500,700"
+    >
+	 <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Lato:400,500,700"
+    >
+	
+	 <style>
+	 
+	 body{
+		background: #232D3F ;
+		margin:0;
+		color:white;	
+		/*box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5); */
+			
+	 }
+	 
+	 .bg{
+		width: 100%;
+		height: 100vh;
+		background-color: #7286D3;
+		opacity: 0;
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		z-index: -9999999;
+	 }
+	 
+	 span{
+		font-size: 13px !important;
+		font-family:"Poppins" !important;
+	 }
+	 
+      /* Custom title bar CSS */
+      .title-bar {
+        background-color: #4F709C;
+		font-family:"Poppins";
+        color: white;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 5px;		
+		margin:0;
+		margin-bottom:10px;
+        user-select: none;
+        -webkit-app-region: drag;
+      }
+	  
+	  .service{
+		 display: flex;
+        justify-content: space-between;
+        align-items: center;
+	  }
+	  
+	  .time-text{
+		 font-family: 'Lato', sans-serif; 
+		 font-size: 14px; 
+		 padding-right:10px;
+	  }
+	  
+	  .title-text {
+        font-family: 'Poppins', sans-serif; /* Use the "Roboto" font */
+        font-size: 18px; /* Set the desired font size */		
+		padding: 5px;
+      }
+	  
+	  button{
+		font-family: 'Poppins', sans-serif;
+		font-size: 13px !important;
+		background: none;
+		color: #B2C8DF;
+		border: 1px solid #B2C8DF;        
+		cursor: pointer;
+	  }
+	  
+	   button:hover{
+		 border: 1px solid white;
+		 color:white;
+	   }
+	   
+	   button:active {background-color:#4F709C;}
+	  
+	  .close-button {
+        background: none;
+        border: none;        
+        cursor: pointer;
+        outline: none;
+		color:white;
+		z-index:9999;
+      }
+	  
+	  .status
+	  {		
+		font-family:"Poppins" !important;
+		font-size: 13px; 
+	  }
+	  
+	  .active{
+		color: #A2FF86 !important;
+	  }
+	  
+	  .not-active{
+		color: #FC2947 !important;
+	  }
+	  
+	  .wrapper{
+	  	background: #2A2F4F url("bg9.jpg") no-repeat;
+		background-size:cover;
+	
+	  }
+	  
+	  .services{
+	  	padding:10px;
+	  }
+	  
+	  .button-bar{
+		padding-top:5px;		
+	  }
+	  
+	  .details{
+		background-color: #27374D;
+	  }
+	  
+	  
+    </style>	
+  </head>
+  <body>
+  
+   <div class="title-bar">
+    <!--<h1 class="title-text">Program Starter</h1>-->
+	<span class="title-text">App Launcher v1.0</span>
+	<!--<button id="closeButton" class="close-button">Close</button>-->
+	<div id="timeElement" class="time-text" title="Hover over me to see the time"></div>
+    </div>
+	<div class="wrapper">
+		<div class="services" id="service-status-container"> 
+		<!--<div class="service"> 
+			<span class="title-text">Zookeper Service</span>
+			<div  class ="status" id="status"><span></span></div>
+			<div>
+			<button id="startButton">Start Service</button><button id="stopButton">Stop Service</button> 
+			</div>
+		</div> 
+		<div class="service"> 
+			<span class="title-text">Kafka Service</span>
+			<div>
+			<button id="startButton">Start Service</button><button id="stopButton">Stop Service</button> 
+			</div>
+		</div>
+		<div class="service">
+			<span class="title-text">Generator Service</span>
+			<div>
+			<button id="startButton">Start Service</button><button id="stopButton">Stop Service</button> 
+			</div>
+		</div>
+		
+		<div class="service">
+			<span class="title-text">Web Service</span>
+			<div>
+			<button id="startButton">Start Service</button><button id="stopButton">Stop Service</button> 
+			</div>
+		</div>
+		<div class="service">
+			<span class="title-text">Backend Service</span>
+			<div>
+			<button id="startButton">Start Service</button><button id="stopButton">Stop Service</button> 
+			</div>
+		</div>-->
+		</div>
+
+	</div>
+		<div class="button-bar">	
+		&nbsp;&nbsp;
+			<button id="open-explorer-button">Recent folders</button>
+			<button id="open-chat-button">ChatGPT</button>
+			<button id="save-explorer-button">Save exploter paths</button>
+			<button id="show-details-button">+</button>
+		<div>
+		<div class="details">
+			 <ul id="text-list" style="display: none;">
+				<li>Text 1</li>
+				<li>Text 2</li>
+				<li>Text 3</li>
+			</ul>
+		</div>
+		<div class="bg"></div> 
+    <script>		
+	
+	//let enlarged = false;
+	
+	const showDetails = document.getElementById('show-details-button');
+    showDetails.addEventListener('click', () => {	
+		 //enlarged = !enlarged;
+		 const textList = document.getElementById('text-list');		
+		 textList.style.display = (textList.style.display == 'none' ? 'block' : 'none')
+	     API.send('resize-window', 'enlarge');
+	});
+	
+	const saveExplorerButton = document.getElementById('save-explorer-button');
+    saveExplorerButton.addEventListener('click', () => {	
+	    API.send('save-explorer', 'python'); 
+	});
+	
+	const openExplorerButton = document.getElementById('open-explorer-button');
+    openExplorerButton.addEventListener('click', () => {		
+	    API.send('open-explorer', 'd:\\project\\kavosh\\'); // Replace with the specific path
+	});
+	
+	const openChatButton = document.getElementById('open-chat-button');
+    openChatButton.addEventListener('click', () => {		
+	    API.send('open-chat', ''); // Replace with the specific path
+	});
+	
+	API.on('infoPkg', (event, message) => {	
+		 const statusElement = document.getElementById('status');
+		 //	console.log(message);
+		 // Loop through the serviceStatuses object and display each service's status
+		const serviceContainer = document.getElementById('service-status-container');
+		serviceContainer.innerHTML  = null;
+
+		for (const serviceName in message) {		
+			//console.log(message[serviceName]);
+			const serviceStatus = message[serviceName];
+			const statusDiv = document.createElement('div');
+			statusDiv.classList.add('service'); 
+			const serviceTitle = document.createElement('span');
+			const serviceStatusSpan = document.createElement('span');
+			statusDiv.appendChild(serviceTitle);
+			statusDiv.appendChild(serviceStatusSpan);
+			serviceTitle.textContent = `${serviceName}`;
+			serviceStatusSpan.textContent = serviceStatus == "active" ? "Running" : "Not running"; // `${serviceStatus}`;
+			serviceStatusSpan.classList.add(serviceStatus == "inactive" ? 'not-active' : 'active');
+			serviceContainer.appendChild(statusDiv);
+		}
+
+	});
+				
+	 /* const closeButton = document.getElementById('closeButton');
+	  closeButton.addEventListener('click', function () {		
+			window.close();
+	  });		
+		*/
+    /*  const { spawn } = require('child_process');
+
+      const startButton = document.getElementById('startButton');
+      const stopButton = document.getElementById('stopButton');
+
+      let serviceProcess;
+
+      startButton.addEventListener('click', () => {
+        serviceProcess = spawn('node', ['path/to/your/service.js']);
+        console.log('Service started');
+      });
+
+      stopButton.addEventListener('click', () => {
+        serviceProcess.kill();
+        console.log('Service stopped');
+      });
+	  	    
+	*/
+	  
+    </script>
+	<script src="renderer.js"></script>	
+  </body>
+</html>
