@@ -128,6 +128,12 @@
 		background-color: #27374D;
 	  }
 	  
+	  .text-list{
+		font-family: 'Poppins', sans-serif;
+		font-size: 13px !important;
+		list-style-type: none;
+	  }
+	  
 	  
     </style>	
   </head>
@@ -183,11 +189,9 @@
 			<button id="save-explorer-button">Save exploter paths</button>
 			<button id="show-details-button">+</button>
 		<div>
-		<div class="details">
-			 <ul id="text-list" style="display: none;">
-				<li>Text 1</li>
-				<li>Text 2</li>
-				<li>Text 3</li>
+		<div class="details"> 
+			 <ul id="text-list" class="text-list" style="display: none;">
+			
 			</ul>
 		</div>
 		<div class="bg"></div> 
@@ -240,6 +244,11 @@
 			serviceContainer.appendChild(statusDiv);
 		}
 
+	});
+	
+	API.on('openFile', (event, message) => {	
+		
+	
 	});
 				
 	 /* const closeButton = document.getElementById('closeButton');

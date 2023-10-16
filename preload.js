@@ -3,7 +3,8 @@
 	const { contextBridge, ipcRenderer ,shell } = require('electron');
 	const path = require('path');
 	const { exec } = require('child_process');
-
+	const fs = require('fs');
+	
 	const API = {};
 	const EVENT = {};
 
@@ -28,6 +29,33 @@
 			//let pkgObj = require(path.join(__dirname, 'package.json'));
 			callback(evnt, message);
 			//console.log(message); // logs out "Hello second window!"
+		})
+	};
+	
+	
+	EVENT.openFile = function(callback){		
+		ipcRenderer.on('open-file', (evnt, message) => {
+			
+			const filePath = 'explorer_paths.txt'
+			   // Read the contents of the selected file
+                fs.readFile(filePath, 'utf-8', (err, data) => {
+                    if (err) {
+                        console.error(err);
+                        return;
+                    }					
+                    const textList = document.getElementById('text-list');
+					textList.innerHTML  = null;
+                    const lines = data.split('\n');					
+
+                    // Populate the list view with file contents
+                    lines.forEach((line) => {
+                        const listItem = document.createElement('li');
+                        listItem.textContent = line;
+                        textList.appendChild(listItem);
+                    });
+                });
+				
+			callback(evnt, message);			
 		})
 	};
 

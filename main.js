@@ -111,6 +111,8 @@ function createWindow() {
         const size = enlarge ? enlargedSize : originalSize;
         if (mainWindow) {
             mainWindow.setSize(size.width, size.height);
+			
+			mainWindow.webContents.send('open-file', '')				
         }
     });
   
