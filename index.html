@@ -134,6 +134,18 @@
 		list-style-type: none;
 	  }
 	  
+	  .active-tr{
+		background-color:#A2FF86;
+		color:#748E63;
+		border-color:#A2FF86;
+	  }
+	  
+	   .inactive-tr{
+			background-color:#FC2947;
+			color:#FFF0F5;
+			border-color:#FC2947;
+	  }
+	  
 	  
     </style>	
   </head>
@@ -186,8 +198,9 @@
 		&nbsp;&nbsp;
 			<button id="open-explorer-button">Recent folders</button>
 			<button id="open-chat-button">ChatGPT</button>
-			<button id="save-explorer-button">Save exploter paths</button>
-			<button id="show-details-button">+</button>
+			<button id="save-explorer-button">Save paths</button>
+			<button id="tr-generator-button">TR generator</button>
+			<button id="show-details-button">&nbsp;+&nbsp;</button>
 		<div>
 		<div class="details"> 
 			 <ul id="text-list" class="text-list" style="display: none;">
@@ -199,9 +212,24 @@
 	
 	//let enlarged = false;
 	
+	const trGeneratorButton = document.getElementById('tr-generator-button');
+    trGeneratorButton.addEventListener('click', () => {			 		 		 
+	     
+		 if (trGeneratorButton.classList.contains('active-tr')){		 
+		 
+			API.send('tr-generate','stopTransactionsGeneration');
+			trGeneratorButton.classList.remove('active-tr');
+			trGeneratorButton.classList.add('inactive-tr');
+		 } else {		 			
+		 
+			API.send('tr-generate','startTransactionsGeneration');
+		 	trGeneratorButton.classList.remove('inactive-tr');
+			trGeneratorButton.classList.add('active-tr');			
+		 }
+	});
+	
 	const showDetails = document.getElementById('show-details-button');
-    showDetails.addEventListener('click', () => {	
-		 //enlarged = !enlarged;
+    showDetails.addEventListener('click', () => {			 
 		 const textList = document.getElementById('text-list');		
 		 textList.style.display = (textList.style.display == 'none' ? 'block' : 'none')
 	     API.send('resize-window', 'enlarge');

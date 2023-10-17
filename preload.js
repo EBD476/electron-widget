@@ -4,11 +4,15 @@
 	const path = require('path');
 	const { exec } = require('child_process');
 	const fs = require('fs');
+	const Client = require('ssh2').Client;
 	
 	const API = {};
 	const EVENT = {};
-
-   let enlarged = false;
+	const serviceNames = {};
+	
+    let enlarged = false;
+   
+	
    
 	contextBridge.exposeInMainWorld('ipcRenderer', {
 		on: ipcRenderer.on,
@@ -31,7 +35,40 @@
 			//console.log(message); // logs out "Hello second window!"
 		})
 	};
-	
+	/*
+	//EVENT.serviceNames = function(callback){
+		ipcRenderer.on('service-names', (evnt, message) => {
+			
+			// Read the configuration file
+			const configPath = path.join(__dirname, 'config.json');
+			const configData = fs.readFileSync(configPath, 'utf-8');
+			const config = JSON.parse(configData);
+			
+		  //	console.log(getServiceStatus(config.services));
+			
+			
+			const serviceList = document.getElementById('service-status-container');
+			//console.log(serviceStatuses);
+			  serviceStatuses.forEach((service) => {
+				  
+				const serviceStatus = serviceStatuses[service];
+			    const statusDiv = document.createElement('div');
+				statusDiv.classList.add('service'); 
+				const serviceTitle = document.createElement('span');
+				const serviceStatusSpan = document.createElement('span');
+				statusDiv.appendChild(serviceTitle);
+				statusDiv.appendChild(serviceStatusSpan);
+				serviceTitle.textContent = `${serviceStatus}`;
+				//const listItem = document.createElement('span')
+				//listItem.textContent = service;
+				serviceList.appendChild(statusDiv)				  
+			  });
+			
+			//callback(evnt, message);
+			
+		})
+	//};
+	*/
 	
 	EVENT.openFile = function(callback){		
 		ipcRenderer.on('open-file', (evnt, message) => {
@@ -90,9 +127,20 @@
 		 shell.openExternal('https://chat.openai.com/');
 	    //const newWindow = new BrowserWindow({ width: 800, height: 600 });
         //newWindow.loadURL('https://chat.openai.com/'); 	    
+	  } else if (eventType == "tr-generate"){
+		  
+		const curlCommand = `curl http://172.16.67.140:5656/api/${data}`; 
+		exec(curlCommand, (error, stdout, stderr) => {
+			if (error) {
+				console.error(`Error: ${error.message}`);
+				return;
+			}
+			console.log(`stdout: ${stdout}`);			
+		});		  
 	  }
 	  
 	};
-
+	
+ 
 	// create an api for window objects in web pages
 	contextBridge.exposeInMainWorld('API', API);

@@ -1,0 +1,8 @@
+{
+    "services": [
+        "zoo.service",
+        "kafka.service",
+        "firewalld.service"
+		
+    ]
+}
